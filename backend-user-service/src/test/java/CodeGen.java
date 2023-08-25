@@ -1,3 +1,4 @@
+import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.codegen.Generator;
 import com.mybatisflex.codegen.config.ColumnConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
@@ -33,20 +34,38 @@ public class CodeGen {
         globalConfig.setBasePackage("io.ram.payment");
 
         //设置表前缀和只生成哪些表
-//        globalConfig.setTablePrefix("sys_");
-        globalConfig.setGenerateTable("payment_merchant_config", "payment_merchant_transfer_log");
+        globalConfig.setTablePrefix("t_");
+        globalConfig.setGenerateTable("t_customer","t_customer_status","t_customer_wallet","t_deposit_log","t_transfer_log");
 
         //设置生成 entity 并启用 Lombok
         globalConfig.setEntityGenerateEnable(true);
         globalConfig.setEntityWithLombok(true);
+//        globalConfig.setEntityOverwriteEnable(true);
+
+        globalConfig.getStrategyConfig().setVersionColumn("revision");
 
         //设置生成 mapper
         globalConfig.setMapperGenerateEnable(true);
         globalConfig.setServiceGenerateEnable(true);
         globalConfig.setServiceImplGenerateEnable(true);
         //可以单独配置某个列
-//        ColumnConfig columnConfig = new ColumnConfig();
-//        columnConfig.setColumnName("tenant_id");
+        ColumnConfig columnConfig = new ColumnConfig();
+        columnConfig.setColumnName("merchant_id");
+        columnConfig.setTenantId(true);
+        globalConfig.setColumnConfig(columnConfig);
+        ColumnConfig idConfig = new ColumnConfig();
+        idConfig.setColumnName("id");
+        idConfig.setKeyType(KeyType.Generator);
+        idConfig.setKeyValue("flex");
+        globalConfig.setColumnConfig(idConfig);
+        ColumnConfig updateConfig = new ColumnConfig();
+        updateConfig.setColumnName("updated_time");
+        updateConfig.setOnUpdateValue("now()");
+        globalConfig.setColumnConfig(updateConfig);
+        ColumnConfig createConfig = new ColumnConfig();
+        createConfig.setColumnName("created_time");
+        createConfig.setOnInsertValue("now()");
+        globalConfig.setColumnConfig(createConfig);
 //        columnConfig.setLarge(true);
 //        columnConfig.setVersion(true);
 //        globalConfig.setColumnConfig("tb_account", columnConfig);
@@ -54,34 +73,4 @@ public class CodeGen {
         return globalConfig;
     }
 
-    public static GlobalConfig createGlobalConfigUseStyle2() {
-        //创建配置内容
-        GlobalConfig globalConfig = new GlobalConfig();
-
-        //设置根包
-        globalConfig.getPackageConfig()
-                .setBasePackage("com.test");
-
-        //设置表前缀和只生成哪些表，setGenerateTable 未配置时，生成所有表
-        globalConfig.getStrategyConfig()
-                .setTablePrefix("tb_")
-                .setGenerateTable("tb_account", "tb_account_session");
-
-        //设置生成 entity 并启用 Lombok
-        globalConfig.enableEntity()
-                .setWithLombok(true);
-
-        //设置生成 mapper
-        globalConfig.enableMapper();
-
-        //可以单独配置某个列
-        ColumnConfig columnConfig = new ColumnConfig();
-        columnConfig.setColumnName("tenant_id");
-        columnConfig.setLarge(true);
-        columnConfig.setVersion(true);
-        globalConfig.getStrategyConfig()
-                .setColumnConfig("tb_account", columnConfig);
-
-        return globalConfig;
-    }
 }
