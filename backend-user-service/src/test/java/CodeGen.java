@@ -49,10 +49,10 @@ public class CodeGen {
         globalConfig.setServiceGenerateEnable(true);
         globalConfig.setServiceImplGenerateEnable(true);
         //可以单独配置某个列
-        ColumnConfig columnConfig = new ColumnConfig();
-        columnConfig.setColumnName("merchant_id");
-        columnConfig.setTenantId(true);
-        globalConfig.setColumnConfig(columnConfig);
+//        ColumnConfig columnConfig = new ColumnConfig();
+//        columnConfig.setColumnName("merchant_id");
+//        columnConfig.setTenantId(true);
+//        globalConfig.setColumnConfig(columnConfig);
         ColumnConfig idConfig = new ColumnConfig();
         idConfig.setColumnName("id");
         idConfig.setKeyType(KeyType.Generator);
