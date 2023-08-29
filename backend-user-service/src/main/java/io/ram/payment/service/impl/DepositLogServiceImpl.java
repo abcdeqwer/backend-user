@@ -14,6 +14,7 @@ import io.ram.payment.entity.DepositLog;
 import io.ram.payment.mapper.DepositLogMapper;
 import io.ram.payment.service.DepositLogService;
 import io.ram.payment.service.FyService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,16 @@ import org.springframework.validation.annotation.Validated;
  */
 @Service
 @Validated
+@Slf4j
 public class DepositLogServiceImpl extends ServiceImpl<DepositLogMapper, DepositLog> implements DepositLogService {
     @Autowired
     private FyService fyService;
     @Value("${fy.token}")
     private String fyToken;
-    @Value("${fy.notify.url}")
-    private String notifyUrl;
+    @Value("${fy.merchantId}")
+    private String merchantId;
+    @Value("${fy.deposit.notifyUrl}")
+    private String depositNotifyUrl;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -49,16 +53,19 @@ public class DepositLogServiceImpl extends ServiceImpl<DepositLogMapper, Deposit
                 .build();
         this.save(depositLog);
         SubmitOrderReq fyReq = SubmitOrderReq.builder()
-                .MerchantID("80")
-                .OrderId(depositLog.getId() + "")
+                .MerchantID(merchantId)
+                .OrderID(depositLog.getId() + "")
                 .Date(DateUtil.formatToyyyyMMddHHmmss(date))
-                .NotifyUrl(notifyUrl)
-                .CallBackUrl("http://www.baidu.com")
+                .NotifyUrl(depositNotifyUrl)
+                .CallBackUrl(depositNotifyUrl)
                 .Amount(req.getAmount() + "")
+                //存款固定渠道1005
                 .MerchantNumber("1005")
+                .UserName(req.getRealName())
                 .build();
         fyReq.doSign(fyToken);
         SubmitOrderResp submitOrderResp = fyService.submitOrder(fyReq);
+        log.info("call fy response:{}",JSONUtil.toJsonStr(submitOrderResp));
         if (StrUtil.equalsIgnoreCase(submitOrderResp.getCode(), "success")) {
             return submitOrderResp.getUrl();
         } else {

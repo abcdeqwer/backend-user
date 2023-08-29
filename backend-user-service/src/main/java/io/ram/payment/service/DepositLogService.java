@@ -3,6 +3,7 @@ package io.ram.payment.service;
 import com.mybatisflex.core.service.IService;
 import io.ram.domain.req.deposit.DepositCreateReq;
 import io.ram.payment.entity.DepositLog;
+import jakarta.validation.Valid;
 
 /**
  * 存款表 服务层。
@@ -16,5 +17,5 @@ public interface DepositLogService extends IService<DepositLog> {
      * @param req
      * @return
      */
-    String createFromFyChannel(DepositCreateReq req);
+    String createFromFyChannel(@Valid DepositCreateReq req);
 }

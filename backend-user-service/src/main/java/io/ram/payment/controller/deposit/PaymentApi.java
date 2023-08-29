@@ -26,7 +26,6 @@ public class PaymentApi {
     @RedissonLock(value = "createDeposit",key = {"#req.customerId"})
     @PostMapping("/deposit/create")
     public R<String> createOrder(@Validated@RequestBody DepositCreateReq req){
-
         return R.success(depositLogService.createFromFyChannel(req));
     }
 }

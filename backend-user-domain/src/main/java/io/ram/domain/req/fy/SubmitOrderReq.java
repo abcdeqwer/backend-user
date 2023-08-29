@@ -2,7 +2,8 @@ package io.ram.domain.req.fy;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.crypto.digest.MD5;
+import cn.hutool.crypto.digest.DigestUtil;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,9 +11,10 @@ import java.util.Map;
 
 @Data
 @Builder
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY, getterVisibility=JsonAutoDetect.Visibility.NONE)
 public class SubmitOrderReq {
     private String MerchantID;
-    private String OrderId;
+    private String OrderID;
     /**
      * yyyyMMddHHmmss
      */
@@ -27,24 +29,25 @@ public class SubmitOrderReq {
     public void doSign(String key){
         Map<String, Object> req= BeanUtil.beanToMap(this, false, true);
         req = MapUtil.sort(req);
+        req.remove("UserName");
         var reqStr= req.toString().replaceAll(",","&").replaceAll(" ","");
         reqStr= reqStr.substring(1, reqStr.length() - 1);
         reqStr = reqStr+key;
-        this.setSign(MD5.create().digestHex(reqStr).toUpperCase());
-    }
+        this.setSign(DigestUtil.md5Hex(reqStr).toUpperCase());
 
+    }
     public static void main(String[] args) {
         SubmitOrderReq test = SubmitOrderReq.builder()
-                .MerchantID("80")
-                .OrderId("2000")
-                .Date("20211111111100")
-                .NotifyUrl("http://www.baidu.com")
-                .CallBackUrl("http://www.baidu.com")
+                .MerchantID("916840")
+                .OrderID("2020021002411")
+                .Date("202002100241")
+                .NotifyUrl("http://baidu.com")
+                .CallBackUrl("http://baidu.com")
                 .Amount("50")
-                .MerchantNumber("1005")
-                .UserName("test")
+                .MerchantNumber("1001")
+                .UserName("kevin")
                 .build();
-        test.doSign("testk");
+        test.doSign("211D1356259FA6329AD826A131481647");
         System.out.println(test.getSign());
     }
 }

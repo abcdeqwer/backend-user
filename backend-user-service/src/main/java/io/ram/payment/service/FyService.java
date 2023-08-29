@@ -6,7 +6,7 @@ import com.dtflys.forest.annotation.Post;
 import io.ram.domain.req.fy.SubmitOrderReq;
 import io.ram.domain.resp.fy.SubmitOrderResp;
 
-@Address(host = "#{fy.domain}",port = "80")
+@Address(basePath = "#{fy.domain}")
 public interface FyService {
 
     @Post(url="/api/Bxds/SubmitOrder")
