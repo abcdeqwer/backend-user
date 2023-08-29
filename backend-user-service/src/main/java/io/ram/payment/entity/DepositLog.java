@@ -78,6 +78,15 @@ public class DepositLog implements Serializable {
     private Integer revision;
 
     /**
+     * 订单完成时间
+     */
+    private LocalDateTime completeTime;
+    /**
+     * 支付系统订单号
+     */
+    private String merchantOrderId;
+
+    /**
      * 创建人
      */
     private String createdBy;

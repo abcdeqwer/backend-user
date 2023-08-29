@@ -3,6 +3,7 @@ package io.ram.payment.controller.deposit;
 import io.ram.config.redisson.RedissonLock;
 import io.ram.domain.R;
 import io.ram.domain.req.deposit.DepositCreateReq;
+import io.ram.domain.req.fy.DepositNotifyReq;
 import io.ram.payment.service.DepositLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,11 @@ public class PaymentApi {
     @PostMapping("/deposit/create")
     public R<String> createOrder(@Validated@RequestBody DepositCreateReq req){
         return R.success(depositLogService.createFromFyChannel(req));
+    }
+
+
+    @PostMapping("/deposit/notify")
+    public String depositNotify(@RequestBody DepositNotifyReq req){
+        return depositLogService.fyDepositNotify(req);
     }
 }

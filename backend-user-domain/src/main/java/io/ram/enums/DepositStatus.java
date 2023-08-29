@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum DepositStatus {
     INIT("init","初始化"),
     WAIT_PAY("waitPay","待付款"),
-    SUCCESS("success","成功上分")
+    SUCCESS("success","成功上分"),
+    FAILED("failed","明确失败")
     ;
     @EnumValue
     private String code;

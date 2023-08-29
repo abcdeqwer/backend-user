@@ -2,6 +2,7 @@ package io.ram.payment.service;
 
 import com.mybatisflex.core.service.IService;
 import io.ram.domain.req.deposit.DepositCreateReq;
+import io.ram.domain.req.fy.DepositNotifyReq;
 import io.ram.payment.entity.DepositLog;
 import jakarta.validation.Valid;
 
@@ -18,4 +19,6 @@ public interface DepositLogService extends IService<DepositLog> {
      * @return
      */
     String createFromFyChannel(@Valid DepositCreateReq req);
+
+    String fyDepositNotify(DepositNotifyReq req);
 }

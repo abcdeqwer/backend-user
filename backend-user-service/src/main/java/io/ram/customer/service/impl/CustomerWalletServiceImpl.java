@@ -37,7 +37,8 @@ public class CustomerWalletServiceImpl extends ServiceImpl<CustomerWalletMapper,
     @Transactional(rollbackFor = Exception.class)
     @RedissonLock(value = "updateBalance",key = {"#req.customerId"})
     public boolean updateBalance(UpdateBalanceReq req) {
-        var queryWrapper = QueryWrapper.create(CustomerWallet.class).select()
+        var queryWrapper = QueryWrapper.create().select()
+                .from(CUSTOMER_WALLET)
                 .where(CUSTOMER_WALLET.CUSTOMER_ID.eq(req.getCustomerId()))
                 .and(CUSTOMER_WALLET.CURRENCY.eq(req.getCurrency()));
         CustomerWallet customerWallet = this.mapper.selectOneByQuery(queryWrapper);
