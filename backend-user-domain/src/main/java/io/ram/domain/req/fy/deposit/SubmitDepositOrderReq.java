@@ -1,4 +1,4 @@
-package io.ram.domain.req.fy;
+package io.ram.domain.req.fy.deposit;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY, getterVisibility=JsonAutoDetect.Visibility.NONE)
-public class SubmitOrderReq {
+public class SubmitDepositOrderReq {
     private String MerchantID;
     private String OrderID;
     /**
@@ -41,7 +41,7 @@ public class SubmitOrderReq {
 
     }
     public static void main(String[] args) {
-        SubmitOrderReq test = SubmitOrderReq.builder()
+        SubmitDepositOrderReq test = SubmitDepositOrderReq.builder()
                 .MerchantID("916840")
                 .OrderID("2020021002411")
                 .Date("202002100241")

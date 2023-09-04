@@ -27,7 +27,7 @@ public class UpdateBalanceReq extends BaseReq {
     @NotNull(message = "transferType.not.null")
     private TransferType transferType;
     /**
-     * 交易额度
+     * 交易额度,正负值
      */
     @NotNull(message = "transferAmount.not.null")
     private BigDecimal transferAmount;

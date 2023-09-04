@@ -2,7 +2,7 @@ package io.ram;
 
 import io.ram.customer.service.CustomerService;
 import io.ram.domain.R;
-import io.ram.payment.task.QueryDepositStatusTask;
+import io.ram.payment.task.FyPaymentTask;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +22,7 @@ public class Main {
     @Autowired
     private CustomerService customerService;
     @Autowired
-    private QueryDepositStatusTask queryDepositStatusTask;
+    private FyPaymentTask queryDepositStatusTask;
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }

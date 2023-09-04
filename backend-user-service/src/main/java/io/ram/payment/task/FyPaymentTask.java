@@ -1,14 +1,15 @@
 package io.ram.payment.task;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import io.ram.config.DateUtil;
 import io.ram.config.redisson.RedissonLock;
-import io.ram.domain.req.fy.QueryOrderReq;
+import io.ram.domain.req.fy.deposit.QueryOrderReq;
 import io.ram.enums.DepositStatus;
 import io.ram.payment.entity.DepositLog;
 import io.ram.payment.service.DepositLogService;
 import io.ram.payment.service.FyService;
+import io.ram.payment.service.WithdrawalLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,9 +21,11 @@ import static io.ram.payment.entity.table.DepositLogTableDef.DEPOSIT_LOG;
 
 @Component
 @Slf4j
-public class QueryDepositStatusTask {
+public class FyPaymentTask {
     @Autowired
     private DepositLogService depositLogService;
+    @Autowired
+    private WithdrawalLogService withdrawalLogService;
     @Autowired
     private FyService fyService;
 
@@ -46,10 +49,16 @@ public class QueryDepositStatusTask {
                     .build();
             req.doSign(fyToken);
             var queryOrderResp = fyService.queryOrder(req);
-            if(StrUtil.equalsIgnoreCase(queryOrderResp.getCode(),"success")){
+            if(CharSequenceUtil.equalsIgnoreCase(queryOrderResp.getCode(),"success")){
                 depositLogService.fyDepositNotify(queryOrderResp);
             }
         }
         log.info("ending check wait_pay order status");
+    }
+    @RedissonLock(value = "checkWithdrawalStatusJob")
+    @XxlJob("checkWithdrawalStatus")
+    public void checkWithdrawal(){
+        log.info("starting check wait_pay withdraw order status");
+        log.info("ending check wait_pay withdraw order status");
     }
 }

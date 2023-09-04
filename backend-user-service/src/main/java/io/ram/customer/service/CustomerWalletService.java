@@ -12,5 +12,5 @@ import io.ram.domain.req.UpdateBalanceReq;
  */
 public interface CustomerWalletService extends IService<CustomerWallet> {
 
-    boolean updateBalance(UpdateBalanceReq req);
+    void updateBalance(UpdateBalanceReq req);
 }

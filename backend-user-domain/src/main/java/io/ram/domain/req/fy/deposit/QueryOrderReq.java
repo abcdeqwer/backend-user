@@ -1,4 +1,4 @@
-package io.ram.domain.req.fy;
+package io.ram.domain.req.fy.deposit;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;

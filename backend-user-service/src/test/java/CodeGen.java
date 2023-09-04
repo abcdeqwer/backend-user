@@ -35,7 +35,7 @@ public class CodeGen {
 
         //设置表前缀和只生成哪些表
         globalConfig.setTablePrefix("t_");
-        globalConfig.setGenerateTable("t_customer","t_customer_status","t_customer_wallet","t_deposit_log","t_transfer_log");
+        globalConfig.setGenerateTable("t_withdrawal_log");
 
         //设置生成 entity 并启用 Lombok
         globalConfig.setEntityGenerateEnable(true);

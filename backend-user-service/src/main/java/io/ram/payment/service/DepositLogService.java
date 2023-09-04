@@ -2,7 +2,7 @@ package io.ram.payment.service;
 
 import com.mybatisflex.core.service.IService;
 import io.ram.domain.req.deposit.DepositCreateReq;
-import io.ram.domain.req.fy.DepositNotifyReq;
+import io.ram.domain.req.fy.deposit.DepositNotifyReq;
 import io.ram.payment.entity.DepositLog;
 import jakarta.validation.Valid;
 

@@ -36,7 +36,7 @@ public class CustomerWalletServiceImpl extends ServiceImpl<CustomerWalletMapper,
     @Override
     @Transactional(rollbackFor = Exception.class)
     @RedissonLock(value = "updateBalance",key = {"#req.customerId"})
-    public boolean updateBalance(UpdateBalanceReq req) {
+    public void updateBalance(UpdateBalanceReq req) {
         var queryWrapper = QueryWrapper.create().select()
                 .from(CUSTOMER_WALLET)
                 .where(CUSTOMER_WALLET.CUSTOMER_ID.eq(req.getCustomerId()))
@@ -58,15 +58,13 @@ public class CustomerWalletServiceImpl extends ServiceImpl<CustomerWalletMapper,
         BigDecimal newBalance = req.getTransferAmount().add(oldBalance);
         //如果用户余额小于零则更新失败
         if(newBalance.compareTo(BigDecimal.ZERO)<0){
-            log.error("update customer balance error,updated balance less then 0");
-            return false;
+            throw new BizException.UpdateWalletFailed("update customer balance error,updated balance less then 0");
         }
         customerWallet.setBalance(newBalance);
         int update = customerWalletMapper.update(customerWallet);
         //判断更新行数
         if(update==0){
-            log.error("update customer wallet error,affected row is zero");
-            return false;
+            throw new BizException.UpdateWalletFailed("update customer wallet error,affected row is zero");
         }
         //插入额度记录
         TransferLog build = TransferLog.builder()
@@ -82,7 +80,6 @@ public class CustomerWalletServiceImpl extends ServiceImpl<CustomerWalletMapper,
         if(!save){
             throw new BizException.Init("update balance error,insert transfer log failed");
         }
-        return true;
     }
 
 }

@@ -1,4 +1,4 @@
-package io.ram.domain.req.fy;
+package io.ram.domain.req.fy.deposit;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ public class DepositNotifyReq {
     private String SysOrderID	;
     private String CompleteTime	;
     private String Amount	;
-    private String Status	;
+    private String status	;
     private String Remarks;
     private String Sign;
     private String Code;
