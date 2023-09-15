@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-spring-boot-starter</artifactId>
-            <version>1.5.8</version>
+            <version>1.6.4</version>
             <exclusions>
                 <exclusion>
                     <artifactId>mybatis-spring</artifactId>
