@@ -46,7 +46,7 @@ public class SubmitWithdrawalOrderReq {
         req.remove("Id");
         req.remove("Type");
         req.remove("Account");
-        var reqStr= req.toString().replaceAll(",","&").replaceAll(" ","");
+        var reqStr= req.toString().replace(",","&").replace(" ","");
         reqStr= reqStr.substring(1, reqStr.length() - 1);
         reqStr = reqStr+key;
         this.setSign(DigestUtil.md5Hex(reqStr).toUpperCase());

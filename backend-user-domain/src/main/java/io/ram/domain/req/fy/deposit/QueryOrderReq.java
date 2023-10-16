@@ -24,7 +24,7 @@ public class QueryOrderReq {
     public void doSign(String key){
         Map<String, Object> req= BeanUtil.beanToMap(this, false, true);
         req = MapUtil.sort(req);
-        var reqStr= req.toString().replaceAll(",","&").replaceAll(" ","");
+        var reqStr= req.toString().replace(",","&").replace(" ","");
         reqStr= reqStr.substring(1, reqStr.length() - 1);
         reqStr = reqStr+key;
         this.setSign(DigestUtil.md5Hex(reqStr).toUpperCase());
