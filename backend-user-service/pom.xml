@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.dtflys.forest</groupId>
             <artifactId>forest-spring-boot3-starter</artifactId>
-            <version>1.5.32</version>
+            <version>1.5.33</version>
         </dependency>
         <dependency>
             <groupId>io.ram</groupId>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-spring-boot-starter</artifactId>
-            <version>1.6.4</version>
+            <version>1.7.3</version>
             <exclusions>
                 <exclusion>
                     <artifactId>mybatis-spring</artifactId>
@@ -56,13 +56,13 @@
         <dependency>
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-processor</artifactId>
-            <version>1.5.8</version>
+            <version>1.7.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-codegen</artifactId>
-            <version>1.5.8</version>
+            <version>1.7.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shenyu</groupId>
